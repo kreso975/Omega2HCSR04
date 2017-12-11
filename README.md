@@ -6,8 +6,8 @@ I have successfully tested this app with Omega2 Plus and HC-SR04+ (version suppo
 
 Current version needs some measure adjustment.
 
-At the moment PIN's are hardcoded:
-TRIGGER = PIN 3
+At the moment PIN's are hardcoded:\n
+TRIGGER = PIN 3\n
 ECHO = PIN 2
 
 Install app using opkg. App will be placed in /bin
