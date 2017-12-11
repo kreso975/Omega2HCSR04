@@ -19,7 +19,7 @@ static void show_usage( std::string argv )
     std::cerr    << "Usage: <option> [<STRING> <STRING>]\n"
                  << "Options:\n"
                  << "\t-h, --help\t\tShow this help message\n"
-                 << "\t-t <PIN> -e <PIN> \t\t -t = Trigger , -e = echo"
+                 << "\t-t <PIN> -e <PIN>\t\t -t = Trigger , -e = echo"
                  << std::endl;
 }
 
@@ -72,7 +72,7 @@ int main( int argc, char* argv[] )
                 auto dur = pulseEnd - pulseStart;
                 auto distance = duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
 
-                // TODO: distance needs calibration - it measures exp less as length grows
+                // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
