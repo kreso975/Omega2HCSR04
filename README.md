@@ -16,6 +16,8 @@ Install app using opkg. App will be placed in /bin
 
 Use: Omega2HCSR04 -t 1 -e 2
 
+Stop: ctrl + C
+
 ----------------------------------------------------------------------------
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
