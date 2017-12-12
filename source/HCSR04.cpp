@@ -73,7 +73,7 @@ int main( int argc, char* argv[] )
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
                 Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
-                auto timeDiff = (pulseEnd - pulseStart:;
+                auto timeDiff = (pulseEnd - pulseStart);
                 auto distance = duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
                 //using distance = duration<float>;
 
