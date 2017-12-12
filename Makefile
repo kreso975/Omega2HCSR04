@@ -20,7 +20,7 @@ include $(TOPDIR)/rules.mk
 
 # Name and release number of this package
 PKG_NAME:=Omega2HCSR04
-PKG_VERSION:=0.0.1
+PKG_VERSION:=0.0.2
 PKG_RELEASE:=1
 
 # This specifies the directory where we're going to build the program.
