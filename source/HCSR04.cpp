@@ -81,7 +81,7 @@ int main( int argc, char* argv[] )
                 }
                 auto pulseStart = Clock::now();                 // Mark pulseStart
 
-                while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
+                while ( Gpio::digitalRead(ECHO_PIN) ) {}        // Check whether the ECHO is HIGH
                 auto pulseEnd = Clock::now();                   // Mark pulseEnd
 
                 // TODO: distance needs calibration - it measures linear less as length grows
@@ -89,7 +89,8 @@ int main( int argc, char* argv[] )
                 auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
                 distance = roundf( distance * 100 ) / 100;      // Round to two decimal points
 
-                if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
+                // Check whether the distance is within range
+                if ( ( distance > 2 ) && ( distance < 400 ) )
                 {
                     std::cout << "Delta pulse_end-pulse_start: \n"
                               << timeDiff.count() << " microseconds.\n"
