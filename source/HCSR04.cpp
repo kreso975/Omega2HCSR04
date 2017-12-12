@@ -66,26 +66,28 @@ int main( int argc, char* argv[] )
                 // TODO, add break for value greater then 400cm as out of range here
                 // Max measurable length = 400cm ~ 23280 microseconds - 23280us
                 microseconds maxDistance{23280};
+
+                Clock::time_point maxDistance1 = Clock::now();
                 //|| Clock::now() >= maxDistance // needs a work on it
-                while ( !Gpio::digitalRead(ECHO_PIN) ) {}      // Check whether the ECHO is LOW
-                Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
+                // Check whether the ECHO is LOW
+                while ( !Gpio::digitalRead(ECHO_PIN) || ((Clock::now() - maxDistance1) >= maxDistance) )
+                {
+                    auto time_point pulseStart = Clock::now();    // Mark pulseStart
+                }
+                //Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
 
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
                 Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
-                auto timeDiff = (pulseEnd - pulseStart);
-                auto distance = duration_cast<duration<double>>(timeDiff * 1000000 / 29.1 / 2 ).count();
-
                 // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
+                auto timeDiff = (pulseEnd - pulseStart);
+                auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
                 {
                     std::cout << "Delta pulse_end-pulse_start: \n"
                               << timeDiff.count() << " microseconds.\n"
-                              << ((pulseEnd - pulseStart) / 29.1 / 2).count() << " cm. \n"
-                              << duration_cast<duration<double>>(timeDiff).count() << " float\n"
-                              << duration_cast<duration<double>>(timeDiff * 1000000 / 29.1 / 2).count() << " cm\n"
                               << distance << " cm rounded\n\n" << std::endl;
                 }
                 else
