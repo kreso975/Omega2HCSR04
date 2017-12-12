@@ -73,30 +73,23 @@ int main( int argc, char* argv[] )
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
                 Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
-                auto dur = pulseEnd - pulseStart;
-                auto distance = duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
-                //using distance = duration<float>;
+
+                auto timeDiff = (pulseEnd - pulseStart).count();
+                using distance = duration<float>;
+                //auto distance = duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
+                distance = (timeDiff * 1000000 / 29.1 / 2 ).count();
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
                 {
-                    std::cout << "Delta pulse_end-pulse_start: "
-                              << (pulseEnd - pulseStart).count()
-                              << " microseconds. - DC: "
-                              << duration_cast<microseconds>(pulseEnd - pulseStart).count()
-                              << " microseconds. \n DC: "
-                              << duration_cast<microseconds>((pulseEnd - pulseStart) / 29.1 / 2).count()
-                              << " cm\n\n"
-                              << ((pulseEnd - pulseStart) / 29.1 / 2).count()
-                              << " cm. \n"
-                              << duration_cast<duration<float>>(dur).count()
-                              << " float\n"
-                              << duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2).count()
-                              << " cm\n"
-                              << distance
-                              << " cm rounded\n\n" << std::endl;
+                    std::cout << "Delta pulse_end-pulse_start: \n"
+                              << timeDiff << " microseconds.\n"
+                              << ((pulseEnd - pulseStart) / 29.1 / 2).count() << " cm. \n"
+                              << duration_cast<duration<float>>(dur).count() << " float\n"
+                              << duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2).count() << " cm\n"
+                              << distance << " cm rounded\n\n" << std::endl;
                 }
                 else
                 {
