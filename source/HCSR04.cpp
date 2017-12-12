@@ -1,8 +1,6 @@
 #include <iostream>
 #include <unistd.h>
-#include <string>
 #include <math.h>
-#include <ctime>
 #include "gpio.h"
 #include <chrono>
 #include <thread>
@@ -14,7 +12,8 @@ const uint8_t TRIG_PIN = 3;         // Associate pin 3 to TRIG
 const uint8_t ECHO_PIN = 2;         // Associate pin 2 to ECHO
 
 // Max measurable length = 400cm ~ 23280 microseconds
-// 2cm ~ 58 microseconds / 1cm = 29 microseconds
+// Min measurable length = 2cm ~ 58 microseconds
+// The speed of sound is 340 m/s or 1cm = 29 microseconds
 microseconds maxDistance{23280};
 microseconds minDistance{58};
 
