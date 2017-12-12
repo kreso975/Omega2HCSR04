@@ -8,7 +8,7 @@
 #include <thread>
 
 using namespace std::chrono;
-typedef std::chrono::high_resolution_clock Clock;
+typedef std::chrono::steady_clock Clock;
 
 const uint8_t TRIG_PIN = 3;         // Associate pin 3 to TRIG
 const uint8_t ECHO_PIN = 2;         // Associate pin 2 to ECHO
@@ -55,14 +55,18 @@ int main( int argc, char* argv[] )
             while ( true )
             {
                 Gpio::digitalWrite( TRIG_PIN, false );
-                std::this_thread::sleep_for(seconds(1));        // Delay of 1 seconds
+                std::this_thread::sleep_for(seconds{1});        // Delay of 1 seconds
 
                 Gpio::digitalWrite( TRIG_PIN, true );
-                nsleep(10000);                                  // I used this because it's more precise
+                //nsleep(10000);                                  // I used this because it's more precise
+                std::this_thread::sleep_for(microseconds{10});    // Sleep for 10 microseconds
 
                 Gpio::digitalWrite( TRIG_PIN, false );
 
                 // TODO, add break for value greater then 400cm as out of range here
+                // Max measurable length = 400cm ~ 23280 microseconds - 23280us
+                auto maxDistance = 23280us;
+                //|| Clock::now() >= maxDistance // needs a work on it
                 while ( !Gpio::digitalRead(ECHO_PIN) ) {}      // Check whether the ECHO is LOW
                 Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
 
@@ -71,6 +75,7 @@ int main( int argc, char* argv[] )
 
                 auto dur = pulseEnd - pulseStart;
                 auto distance = duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
+                //using distance = duration<float>;
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
@@ -78,10 +83,14 @@ int main( int argc, char* argv[] )
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
                 {
                     std::cout << "Delta pulse_end-pulse_start: "
+                              << (pulseEnd - pulseStart).count()
+                              << " microseconds. - DC: "
                               << duration_cast<microseconds>(pulseEnd - pulseStart).count()
-                              << " microseconds \n"
+                              << " microseconds. \n DC: "
                               << duration_cast<microseconds>((pulseEnd - pulseStart) / 29.1 / 2).count()
                               << " cm\n\n"
+                              << ((pulseEnd - pulseStart) / 29.1 / 2).count()
+                              << " cm. \n"
                               << duration_cast<duration<float>>(dur).count()
                               << " float\n"
                               << duration_cast<duration<float>>(dur * 1000000 / 29.1 / 2).count()
