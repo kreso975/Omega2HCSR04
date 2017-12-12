@@ -77,7 +77,7 @@ int main( int argc, char* argv[] )
                 auto timeDiff = (pulseEnd - pulseStart).count();
                 using distance = duration<float>;
                 //auto distance = duration<float>>(dur * 1000000 / 29.1 / 2 ).count();
-                distance = (timeDiff * 1000000 / 29.1 / 2 ).count();
+                auto distance = (timeDiff * 1000000 / 29.1 / 2 ).count();
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
