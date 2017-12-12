@@ -80,9 +80,10 @@ int main( int argc, char* argv[] )
                 Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
                 // TODO: distance needs calibration - it measures linear less as length grows
-                distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
                 auto timeDiff = (pulseEnd - pulseStart);
                 auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
+
+                distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
                 {
