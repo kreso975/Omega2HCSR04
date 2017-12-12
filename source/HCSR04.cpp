@@ -65,7 +65,7 @@ int main( int argc, char* argv[] )
 
                 // TODO, add break for value greater then 400cm as out of range here
                 // Max measurable length = 400cm ~ 23280 microseconds - 23280us
-                auto maxDistance = 23280μs;
+                microseconds maxDistance{23280};
                 //|| Clock::now() >= maxDistance // needs a work on it
                 while ( !Gpio::digitalRead(ECHO_PIN) ) {}      // Check whether the ECHO is LOW
                 Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
