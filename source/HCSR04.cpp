@@ -13,6 +13,10 @@ typedef std::chrono::steady_clock Clock;
 const uint8_t TRIG_PIN = 3;         // Associate pin 3 to TRIG
 const uint8_t ECHO_PIN = 2;         // Associate pin 2 to ECHO
 
+// Max measurable length = 400cm ~ 23280 microseconds
+// 2cm ~ 58 microseconds / 1cm = 29 microseconds
+microseconds maxDistance{23280};
+microseconds minDistance{58};
 
 static void show_usage( std::string argv )
 {
@@ -63,25 +67,26 @@ int main( int argc, char* argv[] )
 
                 Gpio::digitalWrite( TRIG_PIN, false );
 
-                // TODO, add break for value greater then 400cm as out of range here
-                // Max measurable length = 400cm ~ 23280 microseconds - 23280us
-                microseconds maxDistance{23280};
-
                 auto maxDistance1 = Clock::now();
-                //|| Clock::now() >= maxDistance // needs a work on it
+
                 // Check whether the ECHO is LOW
-                while ( !Gpio::digitalRead(ECHO_PIN) || ((Clock::now() - maxDistance1) >= maxDistance) ) {}
+                while ( !Gpio::digitalRead(ECHO_PIN) )
+                {
+                    if ( (Clock::now() - maxDistance1).count() >= maxDistance ) )
+                    {
+                        std::cout << "Out Of Range \n" << std::endl;
+                        return 0;
+                    }
+
+                }
                 auto pulseStart = Clock::now();    // Mark pulseStart
-                //Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
 
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
-                auto pulseEnd = Clock::now();
-                //Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
+                auto pulseEnd = Clock::now();                   // Mark pulseEnd
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 auto timeDiff = (pulseEnd - pulseStart);
                 auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
-
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
