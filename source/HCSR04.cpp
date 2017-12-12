@@ -45,7 +45,7 @@ int main( int argc, char* argv[] )
         std::string arg3 = argv[3];
 
         if ( ( arg == "-h" ) || ( arg == "--help" ) )
-            show_usage(argv[0]); // Show help
+            show_usage(argv[0]);                                // Show help
 
         else if ( ( arg == "-t" ) && ( arg3 == "-e" ) )
         {
@@ -79,7 +79,7 @@ int main( int argc, char* argv[] )
                     }
 
                 }
-                auto pulseStart = Clock::now();    // Mark pulseStart
+                auto pulseStart = Clock::now();                 // Mark pulseStart
 
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
                 auto pulseEnd = Clock::now();                   // Mark pulseEnd
@@ -87,7 +87,7 @@ int main( int argc, char* argv[] )
                 // TODO: distance needs calibration - it measures linear less as length grows
                 auto timeDiff = (pulseEnd - pulseStart);
                 auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
-                distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
+                distance = roundf( distance * 100 ) / 100;      // Round to two decimal points
 
                 if ( ( distance > 2 ) && ( distance < 400 ) )   // Check whether the distance is within range
                 {
