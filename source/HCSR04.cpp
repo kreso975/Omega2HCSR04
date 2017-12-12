@@ -55,7 +55,7 @@ int main( int argc, char* argv[] )
             while ( true )
             {
                 Gpio::digitalWrite( TRIG_PIN, false );
-                std::this_thread::sleep_for(seconds(1));        // Delay of 2 seconds
+                std::this_thread::sleep_for(seconds(1));        // Delay of 1 seconds
 
                 Gpio::digitalWrite( TRIG_PIN, true );
                 nsleep(10000);                                  // I used this because it's more precise
