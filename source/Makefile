@@ -1,7 +1,7 @@
 CCFLAGS=-c -O2 -fPIC
 CXXFLAGS= -std=gnu++11
 
-# build omega2Gpio executable when user executes "make"
+# build Omega2HCSR04 executable when user executes "make"
 SOURCES=$(shell find -name "*.cpp" | sed s:./:: | tr "\n" " ")
 OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
 
