@@ -67,12 +67,12 @@ int main( int argc, char* argv[] )
 
                 Gpio::digitalWrite( TRIG_PIN, false );
 
-                auto maxDistance1 = Clock::now();
+                auto maxDistanceCheck = Clock::now();
 
                 // Check whether the ECHO is LOW
                 while ( !Gpio::digitalRead(ECHO_PIN) )
                 {
-                    if ( (Clock::now() - maxDistance1).count() >= maxDistance ) )
+                    if (Clock::now() - maxDistanceCheck.count() >= maxDistance )
                     {
                         std::cout << "Out Of Range \n" << std::endl;
                         return 0;
