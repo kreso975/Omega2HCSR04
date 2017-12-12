@@ -72,7 +72,7 @@ int main( int argc, char* argv[] )
                 // Check whether the ECHO is LOW
                 while ( !Gpio::digitalRead(ECHO_PIN) )
                 {
-                    if (Clock::now() - maxDistanceCheck.count() >= maxDistance )
+                    if (Clock::now() - maxDistanceCheck >= maxDistance )
                     {
                         std::cout << "Out Of Range \n" << std::endl;
                         return 0;
