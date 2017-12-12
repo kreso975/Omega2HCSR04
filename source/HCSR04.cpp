@@ -70,14 +70,13 @@ int main( int argc, char* argv[] )
                 auto maxDistance1 = Clock::now();
                 //|| Clock::now() >= maxDistance // needs a work on it
                 // Check whether the ECHO is LOW
-                while ( !Gpio::digitalRead(ECHO_PIN) || ((Clock::now() - maxDistance1) >= maxDistance) )
-                {
-                    auto pulseStart = Clock::now();    // Mark pulseStart
-                }
+                while ( !Gpio::digitalRead(ECHO_PIN) || ((Clock::now() - maxDistance1) >= maxDistance) ) {}
+                auto pulseStart = Clock::now();    // Mark pulseStart
                 //Clock::time_point pulseStart = Clock::now();    // Mark pulseStart
 
                 while ( Gpio::digitalRead(ECHO_PIN) )  {}       // Check whether the ECHO is HIGH
-                Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
+                auto pulseEnd = Clock::now();
+                //Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 auto timeDiff = (pulseEnd - pulseStart);
