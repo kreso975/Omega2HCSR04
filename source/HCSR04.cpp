@@ -74,7 +74,7 @@ int main( int argc, char* argv[] )
                 Clock::time_point pulseEnd = Clock::now();      // Mark pulseEnd
 
                 auto timeDiff = (pulseEnd - pulseStart);
-                auto distance = duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2 ).count();
+                auto distance = duration_cast<duration<double>>(timeDiff * 1000000 / 29.1 / 2 ).count();
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 distance = roundf( distance * 100 ) / 100;        // Round to two decimal points
@@ -84,8 +84,8 @@ int main( int argc, char* argv[] )
                     std::cout << "Delta pulse_end-pulse_start: \n"
                               << timeDiff.count() << " microseconds.\n"
                               << ((pulseEnd - pulseStart) / 29.1 / 2).count() << " cm. \n"
-                              << duration_cast<duration<float>>(timeDiff).count() << " float\n"
-                              << duration_cast<duration<float>>(timeDiff * 1000000 / 29.1 / 2).count() << " cm\n"
+                              << duration_cast<duration<double>>(timeDiff).count() << " float\n"
+                              << duration_cast<duration<double>>(timeDiff * 1000000 / 29.1 / 2).count() << " cm\n"
                               << distance << " cm rounded\n\n" << std::endl;
                 }
                 else
