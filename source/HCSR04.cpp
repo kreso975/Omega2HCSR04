@@ -88,7 +88,7 @@ int main( int argc, char* argv[] )
                 auto timeDiff = (pulseEnd - pulseStart);
 
                 using fdistance = duration<float>;
-                auto distance = duration_cast<fdistance>(timeDiff * 1000000 / 29.1 / 2 ).count();
+                auto distance = duration_cast<fdistance>(timeDiff * 1e6 / 29.1 / 2 ).count();
 
                 distance = roundf( distance * 100 ) / 100;      // Round to two decimal points
 
