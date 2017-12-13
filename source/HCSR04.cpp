@@ -86,8 +86,10 @@ int main( int argc, char* argv[] )
 
                 // TODO: distance needs calibration - it measures linear less as length grows
                 auto timeDiff = (pulseEnd - pulseStart);
+
                 using fdistance = duration<float>;
                 auto distance = duration_cast<fdistance>(timeDiff * 1000000 / 29.1 / 2 ).count();
+
                 distance = roundf( distance * 100 ) / 100;      // Round to two decimal points
 
                 // Check whether the distance is within range
